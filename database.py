@@ -14,7 +14,6 @@ class DataBase:
         db_model = session.query(model).filter(model.url == data['url']).first()
         if not db_model:
             db_model = model(**data)
-
         return db_model
 
     def create_post(self, data):

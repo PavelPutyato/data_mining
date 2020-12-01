@@ -44,3 +44,4 @@ class Tag(Base):
     url = Column(String, unique=True, nullable=False)
     name = Column(String, unique=False, nullable=False)
     posts = relationship('Post', secondary=tag_post)
+    

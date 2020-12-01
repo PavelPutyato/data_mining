@@ -40,7 +40,7 @@ class GbBlogParse:
         return posts, paginations
 
     def page_parse(self, soup, url) -> dict:
-        # контент есть тут
+        # контент есть тут.
         tmp = soup.find('script', attrs={'type': 'application/ld+json'}).string
 
         data = {
