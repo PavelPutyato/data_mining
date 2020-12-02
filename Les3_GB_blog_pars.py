@@ -1,7 +1,7 @@
 import bs4
 import requests
 from urllib.parse import urljoin
-from database import DataBase
+from db_geekbrains import DataBase
 
 
 class GbBlogParse:
@@ -40,8 +40,8 @@ class GbBlogParse:
         return posts, paginations
 
     def page_parse(self, soup, url) -> dict:
-        # контент есть тут.
-        tmp = soup.find('script', attrs={'type': 'application/ld+json'}).string
+        # контент есть тут
+        # tmp = soup.find('script', attrs={'type': 'application/ld+json'}).string
 
         data = {
             'post_data': {
@@ -56,6 +56,7 @@ class GbBlogParse:
                                       soup.find('div', attrs={'itemprop': 'author'}).parent.get('href'))},
 
             'tags': [],
+            'comments': [],
 
         }
         for tag in soup.find_all('a', attrs={'class': "small"}):
@@ -64,6 +65,15 @@ class GbBlogParse:
                 'name': tag.text
             }
             data['tags'].append(tag_data)
+
+        for comment in soup.find_all('li', attrs={'class': "gb__comment-item"}):
+            comment_data = {
+                'url': urljoin(self.start_url, comment.get('href')),
+                'author': soup.find('gb__comment-item-header-user-data-name').text,
+                'comment': soup.find('js-comment-body-content').text
+            }
+            print(comment_data)
+            data['comments'].append(comment_data)
         return data
 
     def get_comments(self, comments_soup):
@@ -71,7 +81,9 @@ class GbBlogParse:
             print(1)
 
     def save(self, page_data: dict):
-        self.db.create_post(page_data)
+        # print(page_data)
+        # self.db.create_post(page_data)
+        pass
 
 
 if __name__ == '__main__':
