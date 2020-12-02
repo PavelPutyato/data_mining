@@ -1,0 +1,21 @@
+{
+  "id": 159,
+  "name": "ГОР.ШТУЧ.Изд.ХР.КР.кул.мяса птиц.1с 300г",
+  "mech": null,
+  "img_link": "https://media.5ka.ru/media/products/3427843.jpg",
+  "plu": 3427843,
+  "promo": {
+    "id": 1146517245,
+    "date_begin": "2020-11-17",
+    "date_end": "2020-11-23",
+    "type": "",
+    "description": "",
+    "kind": "Z001",
+    "expired_at": 3
+  },
+  "current_prices": {
+    "price_reg__min": 145.0,
+    "price_promo__min": 119.99
+  },
+  "store_name": null
+}
