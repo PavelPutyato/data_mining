@@ -1,11 +1,34 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import models
+import db_gb_metadata
 
-engine = create_engine('sqlite:///gb_blog.db')
-models.Base.metadata.create_all(bind=engine)
-session_maker = sessionmaker(bind=engine)
 
-if __name__ == '__main__':
-    db = session_maker()
-    print(1)
+class DataBase:
+    def __init__(self, db_url):
+        engine = create_engine(db_url)
+        db_gb_metadata.Base.metadata.create_all(bind=engine)
+        self.session_m = sessionmaker(bind=engine)
+
+    @staticmethod
+    def __get_or_create(session, model, **data):
+        db_model = session.query(model).filter(model.url == data['url']).first()
+        if not db_model:
+            db_model = db_gb_metadata(**data)
+
+        return db_model
+
+    def create_post(self, data):
+        session = self.session_m()
+        tags = map(lambda tag_data: self.__get_or_create(session, db_gb_metadata.Tags, **tag_data), data['tags'])
+        comments = map(lambda comment_data: self.__get_or_create(session, db_gb_metadata.Comments, **comment_data), data['comments'])
+        writer = self.__get_or_create(session, db_gb_metadata.Writer, **data['writer'])
+        post = self.__get_or_create(session, db_gb_metadata.Post, **data['post_data'], writer=writer)
+        post.tags.extend(tags)
+        post.comments.extend(comments)
+        session.add(post)
+        try:
+            session.commit()
+        except Exception as e:
+            session.rollback()
+        finally:
+            session.close()

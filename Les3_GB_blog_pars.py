@@ -1,7 +1,7 @@
 import bs4
 import requests
 from urllib.parse import urljoin
-from db_geekbrains import DataBase
+from data_base import DataBase
 
 
 class GbBlogParse:
