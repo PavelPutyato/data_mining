@@ -56,3 +56,4 @@ class AutoyoulaSpider(scrapy.Spider):
                 data['author'] = 'https://youla.ru/user/' + author_url[0]
 
         self.db.insert_one(data)
+
