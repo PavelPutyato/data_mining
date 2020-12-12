@@ -1,5 +1,4 @@
 # Define here the models for your scraped items
-#
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 
@@ -41,4 +40,8 @@ class InstagramPost(InstagramItem):
 
 
 class InstagramTag(InstagramItem):
+    pass
+
+
+class InstagramUser(InstagramItem):
     pass

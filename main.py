@@ -9,7 +9,7 @@ from gb_parse.spiders.instagram import InstagramSpider
 
 if __name__ == '__main__':
     dotenv.load_dotenv('.env')
-    hash_tags = ['python', 'datascience', 'machinelearning', 'deeplearning']
+    user_list = ['rudakov_alexandrr', 'chernysheva6426']
 
     # Создаем объект - обработчик файла настроек
     crawl_settings = Settings()
@@ -19,7 +19,7 @@ if __name__ == '__main__':
     crawl_proc = CrawlerProcess(settings=crawl_settings)
     # Передаем класс нашего паука (процесс сам его создаст)
     crawl_proc.crawl(InstagramSpider,
-                     start_tags=hash_tags,
+                     start_users=user_list,
                      login=os.getenv('INST_LOGIN'),
                      password=os.getenv('INST_PASS'))
     # Собственно, стартуем
